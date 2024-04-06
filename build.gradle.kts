@@ -1,5 +1,10 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
+buildscript {
+    dependencies {
+        classpath(libs.google.services)
+    }
+}
 plugins {
     id("com.android.application") apply false
     id("com.android.library") apply false

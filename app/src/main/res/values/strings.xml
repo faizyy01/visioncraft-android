@@ -7,4 +7,23 @@
     <string name="notification_title">The Result is: %s</string>
     <string name="please_enter_a_number">Please Enter a Number</string>
     <string name="compose_version">In Compose</string>
+    <!-- Login Fragment -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="dont_have_an_account_sign_up">Don\'t have an account? Sign Up</string>
+
+    <!-- Sign Up Fragment -->
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_an_account_log_in">Already have an account? Log In</string>
+
+    <!-- Home Fragment -->
+    <string name="hello_world">Hello World!</string>
+
+    <!-- Error Messages -->
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="login_failed">Login failed</string>
+    <string name="signup_failed">Sign Up failed</string>
+    <string name="email_and_password_cannot_be_empty">Email and password cannot be empty</string>
+
 </resources>

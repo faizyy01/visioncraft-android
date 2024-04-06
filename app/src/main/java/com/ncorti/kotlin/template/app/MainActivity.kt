@@ -2,42 +2,34 @@ package com.ncorti.kotlin.template.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.ncorti.kotlin.template.app.databinding.ActivityMainBinding
-import com.ncorti.kotlin.template.library.FactorialCalculator
-import com.ncorti.kotlin.template.library.android.ToastUtil
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        binding.buttonCompute.setOnClickListener {
-            val message = if (binding.editTextFactorial.text.isNotEmpty()) {
-                val input = binding.editTextFactorial.text.toString().toLong()
-                val result = try {
-                    FactorialCalculator.computeFactorial(input).toString()
-                } catch (ex: IllegalStateException) {
-                    "Error: ${ex.message}"
-                }
+        // Initialize Firebase Auth
+        val auth = FirebaseAuth.getInstance()
 
-                binding.textResult.text = result
-                binding.textResult.visibility = View.VISIBLE
-                getString(R.string.notification_title, result)
-            } else {
-                getString(R.string.please_enter_a_number)
-            }
-            ToastUtil.showToast(this, message)
-        }
+        // Setup navigation
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-        binding.buttonAppcompose.setOnClickListener {
-            val intent = Intent(it.context, ComposeActivity::class.java)
-            startActivity(intent)
+        // Check if user is logged in and navigate accordingly
+        if (auth.currentUser == null) {
+            // User not logged in, navigate to LoginFragment
+            navController.navigate(R.id.loginFragment)
+        } else {
+            // User is logged in, navigate to HomeFragment
+            navController.navigate(R.id.homeFragment)
         }
     }
 }

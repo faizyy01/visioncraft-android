@@ -16,6 +16,10 @@ kotlin = "1.9.20"
 min_sdk_version = "23"
 target_sdk_version = "34"
 benmanesversion = "0.51.0"
+google-services = "4.4.1"
+firebase-auth = "22.3.1"
+navigation-fragment-ktx = "2.7.7"
+navigation-ui-ktx = "2.7.7"
 
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -38,6 +42,10 @@ detekt_formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso.core" }
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kgp = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "google-services" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebase-auth" }
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
