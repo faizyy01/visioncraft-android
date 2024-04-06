@@ -1,6 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#673AB7</color> <!-- Deep purple 500 -->
+    <color name="colorPrimaryDark">#512DA8</color> <!-- Deep purple 700 -->
+    <color name="colorSecondary">#7C4DFF</color> <!-- Deep purple A200 -->
+    <color name="colorSecondaryVariant">#651FFF</color> <!-- Deep purple A400 -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- White -->
+    <color name="colorOnSecondary">#000000</color> <!-- Black -->
+    <color name="colorSurface">#121212</color> <!-- Surface color for dark themes -->
+    <color name="colorOnSurface">#FFFFFF</color> <!-- On Surface color for dark themes -->
+    <color name="colorBackground">#121212</color> <!-- Background color for dark themes -->
+    <color name="colorOnBackground">#FFFFFF</color> <!-- On Background color for dark themes -->
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#B3B3B3</color>
+    <color name="textOnDark">#FFFFFF</color>
+    <color name="hintColor">#B3B3B3</color>
 </resources>

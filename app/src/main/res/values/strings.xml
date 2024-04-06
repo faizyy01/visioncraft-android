@@ -27,4 +27,10 @@
     <string name="email_and_password_cannot_be_empty">Email and password cannot be empty</string>
     <string name="add_item">Add Item</string>
 
+    <string name="prompt_hint">Enter your prompt here</string>
+    <string name="generate">Generate</string>
+    <string name="status_ready">Ready to generate an image.</string>
+    <string name="status_generating">Generating image</string>
+    <string name="status_complete">Image generation complete.</string>
+
 </resources>
