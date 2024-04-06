@@ -25,5 +25,6 @@
     <string name="login_failed">Login failed</string>
     <string name="signup_failed">Sign Up failed</string>
     <string name="email_and_password_cannot_be_empty">Email and password cannot be empty</string>
+    <string name="add_item">Add Item</string>
 
 </resources>

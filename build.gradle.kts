@@ -17,6 +17,10 @@ plugins {
 
 allprojects {
     group = PUBLISHING_GROUP
+    repositories {
+        google() // Make sure this line is included
+        mavenCentral()
+    }
 }
 
 val detektFormatting = libs.detekt.formatting

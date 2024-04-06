@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation(libs.material)
 
     testImplementation(libs.junit)
 
@@ -74,4 +75,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.espresso.core)
+
 }
