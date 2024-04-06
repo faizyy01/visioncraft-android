@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.material)
-
+    implementation(libs.openai)
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.ext.junit)
