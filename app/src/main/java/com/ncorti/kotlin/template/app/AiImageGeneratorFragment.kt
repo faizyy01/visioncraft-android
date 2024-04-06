@@ -9,7 +9,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import com.ncorti.kotlin.template.app.ai.ImageGenerationUtils
+import kotlinx.coroutines.runBlocking
 
 class AiImageGeneratorFragment : Fragment() {
 
@@ -33,7 +36,8 @@ class AiImageGeneratorFragment : Fragment() {
         generatedImageView = view.findViewById(R.id.ivGeneratedImage)
 
         generateButton.setOnClickListener {
-            generateImage(promptEditText.text.toString())
+            val prompt = promptEditText.text.toString()
+            generateImage(prompt)
         }
 
         return view
@@ -43,14 +47,25 @@ class AiImageGeneratorFragment : Fragment() {
         // Show loading spinner
         progressBar.visibility = View.VISIBLE
         statusTextView.text = getString(R.string.status_generating)
-
-        // TODO: Implement the image generation logic here
-
-        // On image generation completion
-        progressBar.visibility = View.GONE
-        statusTextView.text = getString(R.string.status_complete)
-        // Show the generated image
-        generatedImageView.visibility = View.VISIBLE
-        // You'll need to update the ImageView with the generated image
+        runBlocking {
+            ImageGenerationUtils.generateImage(requireContext(), prompt,
+                { file ->
+                    // On image generation success
+                    progressBar.visibility = View.GONE
+                    statusTextView.text = getString(R.string.status_complete)
+                    // Show the generated image
+                    generatedImageView.visibility = View.VISIBLE
+                    // Update the ImageView with the generated image
+                    generatedImageView.setImageURI(file.toUri())
+                },
+                { error ->
+                    // On image generation error
+                    progressBar.visibility = View.GONE
+                    statusTextView.text = getString(R.string.status_error)
+                    // Return from the function to prevent moving forward
+                    return@generateImage
+                }
+            )
+        }
     }
 }

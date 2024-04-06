@@ -34,5 +34,6 @@
     <string name="status_complete">Image generation complete.</string>
 
     <string name="image_placeholder">This is an image.</string>
+    <string name="status_error">Error generating Image. Please try again.</string>
 
 </resources>
