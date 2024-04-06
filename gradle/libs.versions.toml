@@ -18,13 +18,14 @@ target_sdk_version = "34"
 benmanesversion = "0.51.0"
 google-services = "4.4.1"
 firebase-auth = "22.3.1"
+firestore = "24.11.0"
+storage = "20.3.0"
 navigation-fragment-ktx = "2.7.7"
 navigation-ui-ktx = "2.7.7"
 material = "1.11.0"
+openai = "3.7.1"
+ktor_version = "2.3.9"
 glide_version = "4.16.0"
-firestore = "24.11.0"
-storage = "20.3.0"
-
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
 androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
@@ -48,14 +49,15 @@ agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kgp = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "google-services" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebase-auth" }
-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
-material = { module = "com.google.android.material:material", version.ref = "material" }
-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide_version" }
-glideCompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide_version" }
 firebaseFirestore = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firestore" }
 firebaseStorage = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "storage" }
-
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide_version" }
+glideCompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide_version" }
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
+material = { module = "com.google.android.material:material", version.ref = "material"}
+openai = {module = "com.aallam.openai:openai-client", version.ref = "openai"}
+ktor = {module = "io.ktor:ktor-client-okhttp", version.ref = "ktor_version"}
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "benmanesversion" }

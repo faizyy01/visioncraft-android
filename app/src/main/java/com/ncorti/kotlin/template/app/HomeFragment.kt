@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,7 +36,8 @@ class HomeFragment : Fragment() {
 
         val fab: FloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener {
-            // TODO: Handle FAB click for uploading images
+            // Handle FAB click
+            findNavController().navigate(R.id.action_homeFragment_to_aiImageGeneratorFragment)
         }
 
         fetchImages()
