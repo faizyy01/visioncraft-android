@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "23085836273",
+    "project_id": "visioncraft-956ef",
+    "storage_bucket": "visioncraft-956ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23085836273:android:22b44d7c9b59c2212d0650",
+        "android_client_info": {
+          "package_name": "com.ncorti.kotlin.template.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcD9dHpDl-o4ieKTkNrrMPpovVtqT8rj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
