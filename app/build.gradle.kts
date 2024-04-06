@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     implementation(libs.material)
     implementation(libs.openai)
+    implementation(libs.ktor)
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.ext.junit)

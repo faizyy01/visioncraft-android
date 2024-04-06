@@ -23,12 +23,12 @@ class MainActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         val auth = FirebaseAuth.getInstance()
 
-//        // Initialize OpenAI client
-//        openai = OpenAI(
-//            token = "your-api-key",
-//            timeout = Timeout(socket = 60.seconds),
-//            // additional configurations...
-//        )
+        // Initialize OpenAI client
+        openai = OpenAI(
+            token = "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",
+            timeout = Timeout(socket = 60.seconds),
+            // additional configurations...
+        )
 
         // Setup navigation
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
