@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:hintEnabled="true"
         app:hintTextColor="@color/hintColor"
-        app:hint="@string/email">
+        android:hint="@string/email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
@@ -38,7 +38,7 @@
         app:passwordToggleTint="@color/hintColor"
         app:passwordToggleEnabled="true"
         app:hintTextColor="@color/hintColor"
-        app:hint="@string/password">
+        android:hint="@string/password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
