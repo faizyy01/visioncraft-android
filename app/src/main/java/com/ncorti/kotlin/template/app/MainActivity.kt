@@ -5,8 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.aallam.openai.api.http.Timeout
-import com.aallam.openai.client.OpenAI
+
 import com.google.firebase.auth.FirebaseAuth
 import com.ncorti.kotlin.template.app.databinding.ActivityMainBinding
 import kotlin.time.Duration.Companion.seconds
@@ -14,7 +13,7 @@ import kotlin.time.Duration.Companion.seconds
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-    lateinit var openai: OpenAI
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +22,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         val auth = FirebaseAuth.getInstance()
 
-        // Initialize OpenAI client
-        openai = OpenAI(
-            token = "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",
-            timeout = Timeout(socket = 60.seconds),
-            // additional configurations...
-        )
+
 
         // Setup navigation
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
