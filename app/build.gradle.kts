@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("com.google.gms.google-services")
+    kotlin("kapt")
 }
 
 android {
@@ -75,5 +76,10 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.firebaseFirestore)
+    implementation(libs.firebaseStorage)
+    implementation(libs.glide)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.glideCompiler)
 
 }

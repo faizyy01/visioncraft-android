@@ -32,5 +32,5 @@
     <string name="status_ready">Ready to generate an image.</string>
     <string name="status_generating">Generating image</string>
     <string name="status_complete">Image generation complete.</string>
-
+    <string name="image_description">Generic image description.</string>
 </resources>

@@ -6,19 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <FrameLayout
+    <!-- RecyclerView for displaying the feed -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imagesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/helloWorldTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world"
-            android:textColor="@color/textOnDark"
-            android:layout_gravity="center" />
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -27,6 +21,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/baseline_add_24"
-    android:contentDescription="@string/add_item" />
+        android:contentDescription="@string/add_item" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
