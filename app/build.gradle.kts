@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
     id("com.google.gms.google-services")
 }
 
@@ -71,7 +72,11 @@ dependencies {
     implementation(libs.openai)
     implementation(libs.ktor)
     testImplementation(libs.junit)
-
+    implementation(libs.firebaseFirestore)
+    implementation(libs.firebaseStorage)
+    implementation(libs.glide)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.glideCompiler)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.rules)

@@ -11,8 +11,11 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import com.ncorti.kotlin.template.app.ai.ImageGenerationUtils
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import com.bumptech.glide.Glide
 
 class AiImageGeneratorFragment : Fragment() {
 
@@ -37,35 +40,41 @@ class AiImageGeneratorFragment : Fragment() {
 
         generateButton.setOnClickListener {
             val prompt = promptEditText.text.toString()
-            generateImage(prompt)
+            lifecycleScope.launch {
+                generateImage(prompt)
+            }
         }
 
         return view
     }
 
-    private fun generateImage(prompt: String) {
+    private suspend fun generateImage(prompt: String) {
         // Show loading spinner
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return // Or handle the null case more gracefully
+
         progressBar.visibility = View.VISIBLE
         statusTextView.text = getString(R.string.status_generating)
-        runBlocking {
-            ImageGenerationUtils.generateImage(requireContext(), prompt,
-                { file ->
-                    // On image generation success
+        ImageGenerationUtils.generateImage(requireContext(), prompt, userId,
+            onSuccess = { imageUrl ->
+                // On image generation and upload success
+                requireActivity().runOnUiThread {
                     progressBar.visibility = View.GONE
                     statusTextView.text = getString(R.string.status_complete)
-                    // Show the generated image
                     generatedImageView.visibility = View.VISIBLE
-                    // Update the ImageView with the generated image
-                    generatedImageView.setImageURI(file.toUri())
-                },
-                { error ->
-                    // On image generation error
+
+                    // Use Glide to load the image
+                    Glide.with(this@AiImageGeneratorFragment)
+                        .load(imageUrl)
+                        .into(generatedImageView)
+                }
+            },
+            onError = { error ->
+                // On image generation or upload error
+                requireActivity().runOnUiThread {
                     progressBar.visibility = View.GONE
                     statusTextView.text = getString(R.string.status_error)
-                    // Return from the function to prevent moving forward
-                    return@generateImage
                 }
-            )
-        }
+            }
+        )
     }
 }
