@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private lateinit var bottomNavigationView: BottomNavigationView
+
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             // User is logged in, navigate to HomeFragment
             navController.navigate(R.id.homeFragment)
+            viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+            // Trigger fetch user data
+            viewModel.fetchUserData()
         }
 
         bottomNavigationView.setOnItemSelectedListener { item ->

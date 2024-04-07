@@ -11,7 +11,7 @@ class MainViewModel : ViewModel() {
     private val _userImages = MutableLiveData<List<ImageItem>>()
     val userImages: LiveData<List<ImageItem>> = _userImages
 
-    fun fetchImages() {
+    private fun fetchImages() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
 
@@ -31,5 +31,15 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    // Method to clear data on logout
+    fun fetchUserData() {
+        this.fetchImages()
+    }
     // Add more functions as needed for your UI interactions
+
+    fun addImage(imageItem: ImageItem) {
+        val currentList = _userImages.value?.toMutableList() ?: mutableListOf()
+        currentList.add(imageItem)
+        _userImages.value = currentList
+    }
 }

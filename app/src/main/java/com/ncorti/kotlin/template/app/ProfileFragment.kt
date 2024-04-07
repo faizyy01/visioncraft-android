@@ -55,9 +55,6 @@ class ProfileFragment : Fragment() {
             // Update adapter data
             imagesAdapter.updateData(imageItems)
         }
-
-        // Trigger image fetching
-        viewModel.fetchImages()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
