@@ -25,13 +25,25 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         imagesRecyclerView = view.findViewById(R.id.imagesRecyclerView)
         imagesRecyclerView.layoutManager = LinearLayoutManager(context)
         imagesAdapter = ImagesAdapter(imageItems, requireContext())
+
+        imagesAdapter.listener = object : ImagesAdapter.OnItemClickListener {
+            override fun onItemClick(imageItem: ImageItem) {
+                // Create a Bundle to pass the imageItem properties
+                val bundle = Bundle().apply {
+                    putString("imageUrl", imageItem.url)
+                    putString("prompt", imageItem.prompt)
+                }
+                // Use the action ID to navigate
+                findNavController().navigate(R.id.action_homeFragment_to_imageDetailFragment, bundle)
+            }
+        }
         imagesRecyclerView.adapter = imagesAdapter
         fetchImages()
     }
@@ -53,44 +65,4 @@ class HomeFragment : Fragment() {
                 // Handle any errors here
             }
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        val fab: FloatingActionButton = view.findViewById(R.id.fab)
-//        fab.setOnClickListener {
-//            // Handle FAB click
-//        }
-//    }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        val fab: FloatingActionButton = view.findViewById(R.id.fab)
-//        fab.setOnClickListener {
-//            // Handle FAB click for uploading images
-//        }
-//
-//        // Initialize RecyclerView and Adapter
-//        val imagesRecyclerView: RecyclerView = view.findViewById(R.id.imagesRecyclerView)
-//        imagesRecyclerView.layoutManager = LinearLayoutManager(context)
-//
-//        fetchImages { images ->
-//            val adapter = ImagesAdapter(images)
-//            imagesRecyclerView.adapter = adapter
-//        }
-//    }
-//
-//    private fun fetchImages(callback: (List<ImageItem>) -> Unit) {
-//        val db = FirebaseFirestore.getInstance()
-//        db.collection("images").get().addOnSuccessListener { snapshot ->
-//            val imageList = snapshot.documents.mapNotNull { document ->
-//                document.toObject(ImageItem::class.java)
-//            }
-//            callback(imageList)
-//        }.addOnFailureListener { exception ->
-//            Log.w("HomeFragment", "Error getting documents: ", exception)
-//        }
-//    }
-
 }
