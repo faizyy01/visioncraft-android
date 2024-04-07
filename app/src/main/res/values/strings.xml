@@ -36,5 +36,12 @@
 
     <string name="image_placeholder">This is an image.</string>
     <string name="status_error">Error generating Image. Please try again.</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_create">Create</string>
+    <string name="title_profile">Profile</string>
+    <string name="user_name">User Name</string>
+    <string name="recently_created">Your posts:</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign out</string>
 
 </resources>

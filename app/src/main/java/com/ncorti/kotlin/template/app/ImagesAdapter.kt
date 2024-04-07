@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.ncorti.kotlin.template.app.ImageItem
 import com.ncorti.kotlin.template.app.R
 
-class ImagesAdapter(private val imageList: List<ImageItem>, private val context: Context) : RecyclerView.Adapter<ImagesAdapter.ImageViewHolder>() {
+class ImagesAdapter(private var imageList: MutableList<ImageItem>, private val context: Context) : RecyclerView.Adapter<ImagesAdapter.ImageViewHolder>() {
 
     // ViewHolder class for holding the view references
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,4 +40,11 @@ class ImagesAdapter(private val imageList: List<ImageItem>, private val context:
 
     // Returns the size of the data list
     override fun getItemCount() = imageList.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newImageList: List<ImageItem>) {
+        imageList.clear()
+        imageList.addAll(newImageList)
+        notifyDataSetChanged()
+    }
 }

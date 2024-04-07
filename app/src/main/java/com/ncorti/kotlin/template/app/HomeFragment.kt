@@ -33,13 +33,6 @@ class HomeFragment : Fragment() {
         imagesRecyclerView.layoutManager = LinearLayoutManager(context)
         imagesAdapter = ImagesAdapter(imageItems, requireContext())
         imagesRecyclerView.adapter = imagesAdapter
-
-        val fab: FloatingActionButton = view.findViewById(R.id.fab)
-        fab.setOnClickListener {
-            // Handle FAB click
-            findNavController().navigate(R.id.action_homeFragment_to_aiImageGeneratorFragment)
-        }
-
         fetchImages()
     }
 

@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ class AiImageGeneratorFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var statusTextView: TextView
     private lateinit var generatedImageView: ImageView
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +39,7 @@ class AiImageGeneratorFragment : Fragment() {
         progressBar = view.findViewById(R.id.progressBar)
         statusTextView = view.findViewById(R.id.tvStatus)
         generatedImageView = view.findViewById(R.id.ivGeneratedImage)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         generateButton.setOnClickListener {
             val prompt = promptEditText.text.toString()
@@ -66,6 +69,11 @@ class AiImageGeneratorFragment : Fragment() {
                     Glide.with(this@AiImageGeneratorFragment)
                         .load(imageUrl)
                         .into(generatedImageView)
+
+                    // Create an ImageItem from the generated image URL and prompt
+                    val newImageItem = ImageItem(url = imageUrl, prompt = prompt, owner = userId)
+                    // Add this new image item to the ViewModel's list
+                    viewModel.addImage(newImageItem)
                 }
             },
             onError = { error ->
