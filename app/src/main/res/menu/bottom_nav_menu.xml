@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_feed"
+        android:icon="@drawable/baseline_home_24"
+        android:title="@string/title_feed" />
+    <item
+        android:id="@+id/navigation_create"
+        android:icon="@drawable/baseline_add_24"
+        android:title="@string/title_create" />
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/title_profile" />
+</menu>

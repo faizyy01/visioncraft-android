@@ -23,6 +23,7 @@ class ComposeActivity : ComponentActivity() {
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             AppMain()
         }
@@ -35,12 +36,6 @@ class ComposeActivity : ComponentActivity() {
 fun AppMain() {
     MaterialTheme {
         Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = "Kotlin Android Template") },
-                    backgroundColor = MaterialTheme.colors.primary
-                )
-            },
             backgroundColor = MaterialTheme.colors.background
         ) {
             Box(
