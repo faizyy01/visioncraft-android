@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_homeFragment_to_aiImageGeneratorFragment"
             app:destination="@id/aiImageGeneratorFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_imageDetailFragment"
+            app:destination="@id/imageDetailFragment" />
     </fragment>
 
     <fragment
@@ -58,7 +61,19 @@
             app:destination="@id/loginFragment" />
     </fragment>
 
-
+    <!-- Add the ImageDetailFragment definition here -->
+    <fragment
+        android:id="@+id/imageDetailFragment"
+        android:name="com.ncorti.kotlin.template.app.ImageDetailFragment"
+        android:label="fragment_image_detail"
+        tools:layout="@layout/fragment_image_detail">
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+        <argument
+            android:name="prompt"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
 

@@ -11,6 +11,41 @@ class MainViewModel : ViewModel() {
     private val _userImages = MutableLiveData<List<ImageItem>>()
     val userImages: LiveData<List<ImageItem>> = _userImages
 
+    private val _allImages = MutableLiveData<List<ImageItem>>()
+    val allImages: LiveData<List<ImageItem>> = _allImages
+
+    private var fullImageList: List<ImageItem> = listOf()
+
+    init {
+        fetchAllImages()
+    }
+
+    private fun fetchAllImages() {
+        FirebaseFirestore.getInstance().collection("images")
+            .get()
+            .addOnSuccessListener { documents ->
+                val imageList = documents.map { document ->
+                    document.toObject(ImageItem::class.java)
+                }
+                fullImageList = imageList // Store all images
+                _allImages.value = imageList // Update LiveData with all images
+            }
+            .addOnFailureListener {
+                // Handle any errors
+            }
+    }
+
+    fun filterImages(query: String) {
+        if (query.isEmpty()) {
+            // Reset to all images if query is empty
+            _allImages.value = fullImageList
+        } else {
+            // Apply filter
+            val filteredList = fullImageList.filter { it.prompt.contains(query, ignoreCase = true) }
+            _allImages.value = filteredList
+        }
+    }
+
     private fun fetchImages() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()

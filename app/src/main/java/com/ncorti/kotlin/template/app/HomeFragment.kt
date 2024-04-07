@@ -11,86 +11,64 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var imagesRecyclerView: RecyclerView
     private lateinit var imagesAdapter: ImagesAdapter
-    private var imageItems: MutableList<ImageItem> = mutableListOf()
+    private lateinit var viewModel: MainViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        initializeAdapter() // Handles adapter initialization with click listener
+        setupRecyclerView(view) // Just setup the RecyclerView
+        setupSearchView(view)
+
+        // Observe allImages LiveData from ViewModel
+        viewModel.allImages.observe(viewLifecycleOwner) { images ->
+            imagesAdapter.updateData(images)
+        }
+    }
+
+    private fun initializeAdapter() {
+        // Initialize the adapter with the click listener here
+        imagesAdapter = ImagesAdapter(mutableListOf(), requireContext(), object : ImagesAdapter.OnItemClickListener {
+            override fun onItemClick(imageItem: ImageItem) {
+                val bundle = Bundle().apply {
+                    putString("imageUrl", imageItem.url)
+                    putString("prompt", imageItem.prompt)
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_imageDetailFragment, bundle)
+            }
+        })
+    }
+
+    private fun setupRecyclerView(view: View) {
         imagesRecyclerView = view.findViewById(R.id.imagesRecyclerView)
         imagesRecyclerView.layoutManager = LinearLayoutManager(context)
-        imagesAdapter = ImagesAdapter(imageItems, requireContext())
-        imagesRecyclerView.adapter = imagesAdapter
-        fetchImages()
+        imagesRecyclerView.adapter = imagesAdapter // Use the adapter initialized in initializeAdapter
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun fetchImages() {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("images")
-            .get()
-            .addOnSuccessListener { documents ->
-                imageItems.clear()
-                for (document in documents) {
-                    val imageItem = document.toObject(ImageItem::class.java)
-                    imageItems.add(imageItem)
-                }
-                imagesAdapter.notifyDataSetChanged() // Notify the adapter of data change
+    private fun setupSearchView(view: View) {
+        val searchView = view.findViewById<SearchView>(R.id.searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
-            .addOnFailureListener { exception ->
-                // Handle any errors here
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filterImages(newText.orEmpty())
+                return true
             }
+        })
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        val fab: FloatingActionButton = view.findViewById(R.id.fab)
-//        fab.setOnClickListener {
-//            // Handle FAB click
-//        }
-//    }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        val fab: FloatingActionButton = view.findViewById(R.id.fab)
-//        fab.setOnClickListener {
-//            // Handle FAB click for uploading images
-//        }
-//
-//        // Initialize RecyclerView and Adapter
-//        val imagesRecyclerView: RecyclerView = view.findViewById(R.id.imagesRecyclerView)
-//        imagesRecyclerView.layoutManager = LinearLayoutManager(context)
-//
-//        fetchImages { images ->
-//            val adapter = ImagesAdapter(images)
-//            imagesRecyclerView.adapter = adapter
-//        }
-//    }
-//
-//    private fun fetchImages(callback: (List<ImageItem>) -> Unit) {
-//        val db = FirebaseFirestore.getInstance()
-//        db.collection("images").get().addOnSuccessListener { snapshot ->
-//            val imageList = snapshot.documents.mapNotNull { document ->
-//                document.toObject(ImageItem::class.java)
-//            }
-//            callback(imageList)
-//        }.addOnFailureListener { exception ->
-//            Log.w("HomeFragment", "Error getting documents: ", exception)
-//        }
-//    }
-
 }
