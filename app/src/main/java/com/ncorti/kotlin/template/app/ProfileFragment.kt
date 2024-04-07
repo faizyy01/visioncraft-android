@@ -1,5 +1,6 @@
 package com.ncorti.kotlin.template.app
 
+import ImagesAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.ncorti.kotlin.template.app.databinding.FragmentProfileBinding
 
@@ -17,6 +20,7 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,24 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // No need to find the toolbar by ID because you can access it directly through binding
         (activity as? AppCompatActivity)?.setSupportActionBar(binding.toolbar)
+        // Observe LiveData
+        // Initialize ViewModel
+        // Initialize ViewModel
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        // Setup RecyclerView and Adapter
+        val imagesAdapter = ImagesAdapter(mutableListOf(), requireContext())
+        binding.imagesRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.imagesRecyclerView.adapter = imagesAdapter
+
+        // Observe LiveData from ViewModel
+        viewModel.userImages.observe(viewLifecycleOwner) { imageItems ->
+            // Update adapter data
+            imagesAdapter.updateData(imageItems)
+        }
+
+        // Trigger image fetching
+        viewModel.fetchImages()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -60,4 +82,6 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null // Clear the binding when the view is destroyed
     }
+
+
 }
