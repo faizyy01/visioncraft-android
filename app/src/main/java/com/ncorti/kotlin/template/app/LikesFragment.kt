@@ -32,12 +32,8 @@ class LikesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // No need to find the toolbar by ID because you can access it directly through binding
-//        (activity as? AppCompatActivity)?.setSupportActionBar(binding.toolbar)
-        // Observe LiveData
-        // Initialize ViewModel
-        // Initialize ViewModel
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        viewModel.reFetchFav()
 
         // Setup RecyclerView and Adapter
         val imagesAdapter = ImagesAdapter(mutableListOf(), requireContext(), null)
@@ -45,9 +41,11 @@ class LikesFragment : Fragment() {
         binding.imagesRecyclerView.adapter = imagesAdapter
 
         // Observe LiveData from ViewModel
-        viewModel.userImages.observe(viewLifecycleOwner) { imageItems ->
+        viewModel.favoriteImages.observe(viewLifecycleOwner) { imageItems ->
             // Update adapter data
-            imagesAdapter.updateData(imageItems)
+            if (imageItems != null) {
+                imagesAdapter.updateData(imageItems)
+            }
         }
     }
 

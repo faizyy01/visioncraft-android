@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
         // Initialize ViewModel
         // Initialize ViewModel
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-
+        viewModel.fetchUserData()
         // Setup RecyclerView and Adapter
         val imagesAdapter = ImagesAdapter(mutableListOf(), requireContext(), null)
         binding.imagesRecyclerView.layoutManager = LinearLayoutManager(context)

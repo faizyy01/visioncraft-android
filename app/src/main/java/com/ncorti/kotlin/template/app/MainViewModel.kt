@@ -1,12 +1,20 @@
 package com.ncorti.kotlin.template.app
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
+
 class MainViewModel : ViewModel() {
+    val USERS_COLLECTION = "users"
+    val LIKES_FIELD = "favorites"
 
     private val _userImages = MutableLiveData<List<ImageItem>>()
     val userImages: LiveData<List<ImageItem>> = _userImages
@@ -16,6 +24,10 @@ class MainViewModel : ViewModel() {
 
     private var fullImageList: List<ImageItem> = listOf()
 
+    private val _favoriteImages = MutableLiveData<List<ImageItem>?>()
+    val favoriteImages: MutableLiveData<List<ImageItem>?> = _favoriteImages
+
+
     init {
         fetchAllImages()
     }
@@ -24,12 +36,19 @@ class MainViewModel : ViewModel() {
         FirebaseFirestore.getInstance().collection("images")
             .get()
             .addOnSuccessListener { documents ->
+
                 val imageList = documents.map { document ->
-                    document.toObject(ImageItem::class.java)
+                    ImageItem(
+                        url = document.toObject(ImageItem::class.java).url,
+                        prompt = document.toObject(ImageItem::class.java).prompt,
+                        owner = document.toObject(ImageItem::class.java).owner,
+                        documentId = document.id,  // Set document ID
+                        path = document.reference.path  // Set document path
+                    )
                 }
-                fullImageList = imageList // Store all images
                 _allImages.value = imageList // Update LiveData with all images
             }
+
             .addOnFailureListener {
                 // Handle any errors
             }
@@ -56,8 +75,15 @@ class MainViewModel : ViewModel() {
                 .get()
                 .addOnSuccessListener { documents ->
                     val imageList = documents.map { document ->
-                        document.toObject(ImageItem::class.java)
+                        ImageItem(
+                            url = document.toObject(ImageItem::class.java).url,
+                            prompt = document.toObject(ImageItem::class.java).prompt,
+                            owner = document.toObject(ImageItem::class.java).owner,
+                            documentId = document.id,  // Set document ID
+                            path = document.reference.path  // Set document path
+                        )
                     }
+                    Log.d("image_item", imageList.toString())
                     _userImages.value = imageList
                 }
                 .addOnFailureListener {
@@ -65,6 +91,52 @@ class MainViewModel : ViewModel() {
                 }
         }
     }
+
+    fun fetchFavoriteImages() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val db = FirebaseFirestore.getInstance()
+
+        if (currentUser != null) {
+            val userDocRef = db.collection(USERS_COLLECTION).document(currentUser.uid)
+            userDocRef.get().addOnSuccessListener { document ->
+                // Casting directly to List<DocumentReference>
+                val favoritesList = document.get(LIKES_FIELD) as? List<DocumentReference> ?: listOf()
+                fetchImagesByPaths(favoritesList)
+            }.addOnFailureListener { e ->
+                Log.e("FetchFavorites", "Failed to fetch favorites: ${e.localizedMessage}")
+            }
+        }
+    }
+
+    fun reFetchFav() {
+        _favoriteImages.value = listOf()  // Clear the list to reflect a loading state in the UI
+        this.fetchFavoriteImages()
+    }
+
+    private fun fetchImagesByPaths(references: List<DocumentReference>) {
+        val db = FirebaseFirestore.getInstance()
+        val imageFetchTasks = references.map { ref ->
+            ref.get()  // ref is already a DocumentReference
+        }
+
+        // Aggregate and wait for all fetches to complete
+        Tasks.whenAllSuccess<DocumentSnapshot>(imageFetchTasks)
+            .addOnSuccessListener { documentSnapshots ->
+                val favoriteImageList = documentSnapshots.mapNotNull { document ->
+                    if (document.exists()) {
+                        document.toObject(ImageItem::class.java)?.apply {
+                            documentId = document.id
+                            path = document.reference.path
+                        }
+                    } else null
+                }
+                _favoriteImages.value = favoriteImageList
+            }.addOnFailureListener { e ->
+                Log.e("FetchImageDetails", "Error fetching image details: ${e.localizedMessage}")
+            }
+    }
+
+
 
     // Method to clear data on logout
     fun fetchUserData() {

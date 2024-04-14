@@ -46,6 +46,7 @@ class HomeFragment : Fragment() {
                 val bundle = Bundle().apply {
                     putString("imageUrl", imageItem.url)
                     putString("prompt", imageItem.prompt)
+                    putString("path", imageItem.path)
                 }
                 findNavController().navigate(R.id.action_homeFragment_to_imageDetailFragment, bundle)
             }
