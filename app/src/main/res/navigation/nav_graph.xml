@@ -75,5 +75,13 @@
             app:argType="string" />
     </fragment>
 
+    <fragment
+        android:id="@+id/likesFragment"
+        android:name="com.ncorti.kotlin.template.app.LikesFragment"
+        android:label="Likes"
+        tools:layout="@layout/fragment_likes">
+    </fragment>
+
+
 </navigation>
 

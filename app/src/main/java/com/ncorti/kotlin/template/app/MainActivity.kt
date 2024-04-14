@@ -70,6 +70,11 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.aiImageGeneratorFragment)
                     true
                 }
+                R.id.navigation_likes -> {
+                    // Handle notifications navigation
+                    navController.navigate(R.id.likesFragment)
+                    true
+                }
                 R.id.navigation_profile -> {
                     // Handle notifications navigation
                     navController.navigate(R.id.profileFragment)
