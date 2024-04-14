@@ -71,7 +71,7 @@ class AiImageGeneratorFragment : Fragment() {
                         .into(generatedImageView)
 
                     // Create an ImageItem from the generated image URL and prompt
-                    val newImageItem = ImageItem(url = imageUrl, prompt = prompt, owner = userId)
+                    val newImageItem = ImageItem(url = imageUrl, prompt = prompt, userId = userId)
                     // Add this new image item to the ViewModel's list
                     viewModel.addImage(newImageItem)
                 }

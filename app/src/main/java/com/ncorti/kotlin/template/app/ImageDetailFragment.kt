@@ -38,8 +38,9 @@ class ImageDetailFragment : Fragment() {
         val imageUrl = arguments?.getString("imageUrl")
         val prompt = arguments?.getString("prompt")
         val imagePath = arguments?.getString("path")
+        val imageOwner = arguments?.getString("ownerId")
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
+        Log.d("onViewCreated", imageUrl.toString())
         if (imageUrl != null) {
             Glide.with(this).load(imageUrl).into(binding.fullImageView)
         }
@@ -62,12 +63,17 @@ class ImageDetailFragment : Fragment() {
         }
 
         binding.delBtn.setOnClickListener {
-            if (imagePath != null) {
+            if (imagePath != null && userId == imageOwner) {
                 deleteImage(imagePath)
             } else {
-                Toast.makeText(activity, "Error: No image path found!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "You do not have permission to delete this image.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Disable the delete button if the user is not the owner
+        binding.delBtn.isEnabled = userId == imageOwner
+
+        binding.promptTextView.text = prompt ?: "No description available"
 
         binding.promptTextView.text = prompt ?: "No description available"
     }

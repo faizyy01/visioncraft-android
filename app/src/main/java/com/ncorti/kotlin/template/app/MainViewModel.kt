@@ -41,7 +41,7 @@ class MainViewModel : ViewModel() {
                     ImageItem(
                         url = document.toObject(ImageItem::class.java).url,
                         prompt = document.toObject(ImageItem::class.java).prompt,
-                        owner = document.toObject(ImageItem::class.java).owner,
+                        userId = document.toObject(ImageItem::class.java).userId,
                         documentId = document.id,  // Set document ID
                         path = document.reference.path  // Set document path
                     )
@@ -78,7 +78,7 @@ class MainViewModel : ViewModel() {
                         ImageItem(
                             url = document.toObject(ImageItem::class.java).url,
                             prompt = document.toObject(ImageItem::class.java).prompt,
-                            owner = document.toObject(ImageItem::class.java).owner,
+                            userId = document.toObject(ImageItem::class.java).userId,
                             documentId = document.id,  // Set document ID
                             path = document.reference.path  // Set document path
                         )

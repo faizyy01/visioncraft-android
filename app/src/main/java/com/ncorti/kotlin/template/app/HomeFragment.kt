@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
                     putString("imageUrl", imageItem.url)
                     putString("prompt", imageItem.prompt)
                     putString("path", imageItem.path)
+                    putString("ownerId", imageItem.userId)
                 }
                 findNavController().navigate(R.id.action_homeFragment_to_imageDetailFragment, bundle)
             }
